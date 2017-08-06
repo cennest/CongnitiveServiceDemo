@@ -1,0 +1,13 @@
+#fileInputContainer {
+    min-width: 320px;
+}
+
+#fileInputContainer button {
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 10px;
+}
+
+#fileInputContainer input {
+    z-index: 1;
+}
