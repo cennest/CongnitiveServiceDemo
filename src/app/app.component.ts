@@ -1,21 +1,28 @@
 import { Component } from '@angular/core';
-
+import {OCRAPI } from '../shared/services/index';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+   providers: [OCRAPI]
 })
 export class AppComponent {
   title = 'Reader App';
   boolImageTitle = '';
   imgUrl = '';
 
-  constructor() {
+  constructor(private ocrapi: OCRAPI) {
 
   }
 
+private readResult(result)
+{
+  alert(result);
+}
   private onImportChange(event) {
-    const image = (event.srcElement || event.target).files[0];
+
+this.ocrapi.readTextFromImage().subscribe(data => this.readResult(data));
+    /*const image = (event.srcElement || event.target).files[0];
     if (image) {
       this.boolImageTitle = image.name;
 
@@ -25,7 +32,7 @@ export class AppComponent {
       };
 
       reader.readAsDataURL(image);
-    }
+    }*/
   }
 
 }
