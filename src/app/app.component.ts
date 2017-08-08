@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {OCRAPI } from '../shared/services/index';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,7 +18,7 @@ export class AppComponent {
 
 private readResult(result)
 {
-  alert(result);
+  alert(JSON.stringify(result));
 }
   private onImportChange(event) {
 
