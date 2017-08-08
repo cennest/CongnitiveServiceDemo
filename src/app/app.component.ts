@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import {OCRAPI } from '../shared/services/index';
+import { OCRAPI } from '../shared/services/index';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-   providers: [OCRAPI]
+  providers: [OCRAPI]
 })
 export class AppComponent {
   title = 'Reader App';
@@ -16,14 +16,13 @@ export class AppComponent {
 
   }
 
-private readResult(result)
-{
-  alert(JSON.stringify(result));
-}
+  private readResult(result) {
+    alert(JSON.stringify(result));
+  }
   private onImportChange(event) {
 
-this.ocrapi.readTextFromImage().subscribe(data => this.readResult(data));
-    /*const image = (event.srcElement || event.target).files[0];
+    //this.ocrapi.readTextFromImage().subscribe(data => this.readResult(data));
+    const image = (event.srcElement || event.target).files[0];
     if (image) {
       this.boolImageTitle = image.name;
 
@@ -32,8 +31,15 @@ this.ocrapi.readTextFromImage().subscribe(data => this.readResult(data));
         this.imgUrl = (imgevent.srcElement || imgevent.target)['result'];
       };
 
-      reader.readAsDataURL(image);
-    }*/
+      reader.readAsArrayBuffer(image);
+      reader.onload = () => {
+        let arrayBuffer = reader.result;
+        let bytes = new Uint8Array(arrayBuffer);
+        console.log(bytes);
+        this.ocrapi.readTextFromImageBytes(bytes).subscribe(data=>this.readResult(data));
+        alert(bytes);
+      };
+    }
   }
 
 }

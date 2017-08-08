@@ -11,14 +11,22 @@ export class OCRAPI
     private headers: Headers;
     constructor(private http:Http)
     {
-    this.headers = new Headers({ "Content-Type": "application/json" });
-        this.headers.append("Accept", "application/json");
-        this.headers.append("Ocp-Apim-Subscription-Key",this.subscriptionKey);
+    this.headers = new Headers({ "Content-Type": "application/octet-stream" });
+        
+this.headers.append("Ocp-Apim-Subscription-Key",this.subscriptionKey);
     }
     readTextFromImage()
     {let options = new RequestOptions({ headers: this.headers });
      let imageUrl= "https://image.slidesharecdn.com/opticalcharacterrecognitionforbanglahandwrittentext-120207073409-phpapp02/95/optical-character-recognition-for-bangla-handwritten-text-4-728.jpg?cb=1328600115"
          return this.http.post(this.requesturl, JSON.stringify({ url: imageUrl}), options)
+            .map(res => res.json());
+    }
+    readTextFromImageBytes(array: Uint8Array)
+    {
+let options = new RequestOptions({ headers: this.headers });
+     //let imageUrl= "https://image.slidesharecdn.com/opticalcharacterrecognitionforbanglahandwrittentext-120207073409-phpapp02/95/optical-character-recognition-for-bangla-handwritten-text-4-728.jpg?cb=1328600115"
+          let blob = new Blob( [ array ], { type: "image/jpeg" } );
+         return this.http.post(this.requesturl,blob, options)
             .map(res => res.json());
     }
 }
