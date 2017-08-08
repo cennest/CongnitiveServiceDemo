@@ -11,13 +11,21 @@ export class AppComponent {
   title = 'Reader App';
   boolImageTitle = '';
   imgUrl = '';
+  textRead='';
 
   constructor(private ocrapi: OCRAPI) {
 
   }
 
   private readResult(result) {
-    alert(JSON.stringify(result));
+  let text:string ='';
+    result.regions[0].lines.forEach(element => {
+      element.words.forEach(wordElement => {
+      text=text+' '+ wordElement.text ;
+      });
+    });
+    this.textRead=text;
+  //  alert(JSON.stringify(text));
   }
   private onImportChange(event) {
 
@@ -30,14 +38,17 @@ export class AppComponent {
       reader.onload = (imgevent) => {
         this.imgUrl = (imgevent.srcElement || imgevent.target)['result'];
       };
-
-      reader.readAsArrayBuffer(image);
-      reader.onload = () => {
-        let arrayBuffer = reader.result;
+    
+      reader.readAsDataURL(image);
+      const dataReader= new FileReader();
+      
+      dataReader.readAsArrayBuffer(image);
+      dataReader.onload = () => {
+        let arrayBuffer = dataReader.result;
         let bytes = new Uint8Array(arrayBuffer);
         console.log(bytes);
         this.ocrapi.readTextFromImageBytes(bytes).subscribe(data=>this.readResult(data));
-        alert(bytes);
+      //  alert(bytes);
       };
     }
   }
