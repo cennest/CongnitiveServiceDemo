@@ -1,0 +1,27 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="center">
+  <h5>
+    Welcome to {{title}}!
+  </h5>
+  <div class="container">
+    <div class="row">
+      <span id="fileInputContainer" class="file-field input-field waves-effect blue-grey lighten-3">
+      <h5>Drop image here</h5>
+      <h5>Or</h5>
+      <button class="waves-effect waves-light btn" (click)="onImport()">
+        <i class="material-icons">file_upload</i>Browse
+      </button>
+      <input type="file" (change)="onImportChange($event)" accept="image/*" />
+    </span>
+    </div>
+    <div class="row">
+      <div class="card">
+        <div class="card-image">
+          <span>{{textRead}}</span>
+          <img [src]="imgUrl">
+          <span class="card-title">{{boolImageTitle}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
