@@ -1,15 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ImageTextComponent } from "./reader/image-text/image-text.component";
+
+import { AppComponent } from './app.component';
+import { routing } from './app.routing';
+import { ReaderModule } from './reader/reader.module';
+
 
 @NgModule({
   declarations: [
-    ImageTextComponent
+    AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    routing,
+    ReaderModule
   ],
   providers: [],
-  bootstrap: [ImageTextComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
