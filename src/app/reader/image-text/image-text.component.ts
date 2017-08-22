@@ -11,26 +11,24 @@ export class ImageTextComponent {
   title = 'Reader App';
   boolImageTitle = '';
   imgUrl = '';
-  textRead='';
-  ocrapi : OCRAPI;
+  textRead = '';
 
-  // constructor(private ocrapi: OCRAPI) {
-
-  // }
+  constructor(private ocrapi: OCRAPI) {
+  }
 
   private readResult(result) {
-  let text:string ='';
+    let text = '';
     result.regions[0].lines.forEach(element => {
       element.words.forEach(wordElement => {
-      text=text+' '+ wordElement.text ;
+        text = text + ' ' + wordElement.text;
       });
     });
-    this.textRead=text;
-  //  alert(JSON.stringify(text));
+    this.textRead = text;
+    //  alert(JSON.stringify(text));
   }
   private onImportChange(event) {
 
-    //this.ocrapi.readTextFromImage().subscribe(data => this.readResult(data));
+    // this.ocrapi.readTextFromImage().subscribe(data => this.readResult(data));
     const image = (event.srcElement || event.target).files[0];
     if (image) {
       this.boolImageTitle = image.name;
@@ -39,17 +37,17 @@ export class ImageTextComponent {
       reader.onload = (imgevent) => {
         this.imgUrl = (imgevent.srcElement || imgevent.target)['result'];
       };
-    
+
       reader.readAsDataURL(image);
-      const dataReader= new FileReader();
-      
+      const dataReader = new FileReader();
+
       dataReader.readAsArrayBuffer(image);
       dataReader.onload = () => {
         let arrayBuffer = dataReader.result;
         let bytes = new Uint8Array(arrayBuffer);
         console.log(bytes);
-        this.ocrapi.readTextFromImageBytes(bytes).subscribe(data=>this.readResult(data));
-      //  alert(bytes);
+        this.ocrapi.readTextFromImageBytes(bytes).subscribe(data => this.readResult(data));
+        //  alert(bytes);
       };
     }
   }
